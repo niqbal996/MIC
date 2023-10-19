@@ -28,7 +28,7 @@ dist/
 # project dirs
 /datasets
 /snapshots
-
+/build 
 # log files
 *.out
 
