@@ -35,9 +35,12 @@ MODEL:
   MASKING_RATIO: 0.5
   TEACHER_ALPHA: 0.9
 DATASETS:
-  SOURCE_TRAIN: ("cityscapes_fine_instanceonly_seg_train_cocostyle",)
-  TARGET_TRAIN: ("foggy_cityscapes_fine_instanceonly_seg_train_cocostyle",)
-  TEST: ("foggy_cityscapes_fine_instanceonly_seg_val_cocostyle",)
+  # SOURCE_TRAIN: ("cityscapes_fine_instanceonly_seg_train_cocostyle",)
+  # TARGET_TRAIN: ("foggy_cityscapes_fine_instanceonly_seg_train_cocostyle",)
+  # TEST: ("foggy_cityscapes_fine_instanceonly_seg_val_cocostyle",)
+  SOURCE_TRAIN: ("maize_syn_v2_train",)
+  TARGET_TRAIN: ("maize_real_v2_val",)
+  TEST: ("maize_real_v2_val",)
 INPUT:
   MIN_SIZE_TRAIN: (800,)
   MAX_SIZE_TRAIN: 1600

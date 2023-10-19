@@ -7,6 +7,14 @@ import os
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
+        "maize_syn_v2_train": {
+            "img_dir": "/opt/datasets/Corn_syn_dataset/maize_syn_v3/data",
+            "ann_file": "/opt/datasets/Corn_syn_dataset/maize_syn_v3/instances_train_2022.json"
+        },
+        "maize_real_v2_val": {
+            "img_dir": "/opt/datasets/Corn_syn_dataset/GIL_dataset/all_days/data",
+            "ann_file": "/opt/datasets/Corn_syn_dataset/2022_GIL_Paper_Dataset_V2/coco_anns/instances_val_2022.json"
+        },
         "coco_2017_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017.json"
@@ -180,6 +188,18 @@ class DatasetCatalog(object):
             )
             return dict(
                 factory="PascalVOCDataset",
+                args=args,
+            )
+        elif "maize" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                root=os.path.join(data_dir, attrs["img_dir"]),
+                ann_file=os.path.join(data_dir, attrs["ann_file"]),
+                remove_images_without_annotations=True,
+            )
+            return dict(
+                factory="MaizeDataset",
                 args=args,
             )
         raise RuntimeError("Dataset not available: {}".format(name))
