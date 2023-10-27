@@ -22,6 +22,8 @@ def evaluate(dataset, predictions, output_folder, **kwargs):
         return coco_evaluation(**args)
     elif isinstance(dataset, datasets.MaizeDataset):
         return coco_evaluation(**args)
+    elif isinstance(dataset, datasets.PhenoBench):
+        return coco_evaluation(**args)
     elif isinstance(dataset, datasets.PascalVOCDataset):
         return voc_evaluation(**args)
     else:

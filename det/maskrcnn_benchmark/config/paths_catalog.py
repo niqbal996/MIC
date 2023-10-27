@@ -15,6 +15,26 @@ class DatasetCatalog(object):
             "img_dir": "/opt/datasets/Corn_syn_dataset/GIL_dataset/all_days/data",
             "ann_file": "/opt/datasets/Corn_syn_dataset/2022_GIL_Paper_Dataset_V2/coco_anns/instances_val_2022.json"
         },
+        "maize_syn_v2_train_slurm": {
+            "img_dir": "/netscratch/naeem/maize_syn_v3/data",
+            "ann_file": "/netscratch/naeem/maize_syn_v3/instances_train_2022.json"
+        },
+        "maize_syn_v2_train_slurm_transformed": {
+            "img_dir": "/netscratch/naeem/maize_syn_v3/data_2",
+            "ann_file": "/netscratch/naeem/maize_syn_v3/instances_train_2022.json"
+        },
+        "maize_real_v2_val_slurm": {
+            "img_dir": "/netscratch/naeem/maize_real_all_days/data",
+            "ann_file": "/netscratch/naeem/maize_real_all_days/coco_annotations/all_data.json"
+        },
+        "sugarbeets_v1_syn_train": {
+            "img_dir": "/netscratch/naeem/sugarbeet_syn_v1/images/",
+            "ann_file": "/netscratch/naeem/sugarbeet_syn_v1/coco_annotations/instances_2023_train.json"
+        },
+        "phenobench_val": {
+            "img_dir": "/netscratch/naeem/phenobench/train/",
+            "ann_file": "/netscratch/naeem/phenobench/coco_annotations/coco_plants_panoptic_train.json"
+        },
         "coco_2017_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017.json"
@@ -200,6 +220,18 @@ class DatasetCatalog(object):
             )
             return dict(
                 factory="MaizeDataset",
+                args=args,
+            )
+        elif "sugar" or "phenobench" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            attrs = DatasetCatalog.DATASETS[name]
+            args = dict(
+                root=os.path.join(data_dir, attrs["img_dir"]),
+                ann_file=os.path.join(data_dir, attrs["ann_file"]),
+                remove_images_without_annotations=True,
+            )
+            return dict(
+                factory="PhenoBench",
                 args=args,
             )
         raise RuntimeError("Dataset not available: {}".format(name))
